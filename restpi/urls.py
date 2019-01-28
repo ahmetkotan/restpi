@@ -16,9 +16,14 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from restpi.views import Index, Login, Logout
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', Index.as_view()),
+    url(r'^login/$', Login.as_view()),
+    url(r'^logout/$', Logout.as_view()),
 
+    url(r'^pins/', include('pins.urls')),
     url(r'', include('tokenauth.urls')),
-    url(r'', include('pins.urls')),
 ]

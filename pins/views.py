@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from django.views.generic import ListView
 
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 # Create your views here.
 
@@ -8,8 +10,22 @@ from picontrol.control import read_pin, read_all_pin, write_pin_value, write_pin
 from pins.pagination import PaginationAPIView
 from pins.serializers import PinSerializer
 
+class PinIndexView(ListView):
+    template_name = 'pins/index.html'
+
+    def get_queryset(self):
+        return read_all_pin()
+
 class PinView(PaginationAPIView):
     serializer_class = PinSerializer
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            self.permission_classes = [AllowAny, ]
+        else:
+            self.permission_classes = [IsAuthenticated, ]
+
+        return super(PinView, self).get_permissions()
 
     def get(self, request, pin=None):
         if pin:
@@ -35,7 +51,7 @@ class PinView(PaginationAPIView):
 
         mode = serializer.validated_data.pop("mode", None)
         value = serializer.validated_data.pop("value", None)
-        physical = serializer.validated_data.pop("physical")
+        physical = pin
 
         if mode is None and value is None:
             response = {"operation": False, "pin": read_pin(physical)}

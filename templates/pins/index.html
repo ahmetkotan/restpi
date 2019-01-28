@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Login{% endblock %}
+
+{% block mainarea %}
+    <main class="main-bar">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="table-responsive text-nowrap">
+                    <table class="table" id="pin-table">
+                        <thead>
+                        <tr>
+                            <th scope="col">BCM</th>
+                            <th scope="col">Pin Name</th>
+                            <th scope="col">Mode</th>
+                            <th scope="col">Value</th>
+                            <th scope="col" class="text-right">#</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Value</th>
+                            <th scope="col">Mode</th>
+                            <th scope="col">Pin Name</th>
+                            <th scope="col">BCM</th>
+                        </tr>
+                        </thead>
+                        {% verbatim %}
+                        <tbody ng-controller="pinTableController" ng-app="pinTableApp">
+                        <tr ng-repeat="pin in pins">
+                            <td>{{ pin[0].BCM }}</td>
+                            <td>{{ pin[0].name }}</td>
+                            <td>{{ pin[0].hr_mode }}</td>
+                            <td><input type="checkbox" class="switch_1" ng-checked="pin[0].value"></td>
+                            <th scope="row" class="text-right">{{ pin[0].physical }}</th>
+                            <th scope="row">{{ pin[1].physical }}</th>
+                            <td><input type="checkbox" class="switch_1" ng-checked="pin[1].value"></td>
+                            <td>{{ pin[1].hr_mode }}</td>
+                            <td>{{ pin[1].name }}</td>
+                            <td>{{ pin[1].BCM }}</td>
+                        </tr>
+                        </tbody>
+                        {% endverbatim %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="{% static 'js/pintable.js' %}"></script>
+{% endblock %}

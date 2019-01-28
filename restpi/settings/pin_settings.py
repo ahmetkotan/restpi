@@ -6,7 +6,7 @@ PINS = [
     {"physical": 3, "name": "SDA.1", "mode": None, "value": None, "BCM": 2},
     {"physical": 4, "name": "5v", "mode": None, "value": None, "BCM": None},
     {"physical": 5, "name": "SCL.1", "mode": None, "value": None, "BCM": 3},
-    {"physical": 6, "name": "0v", "mode": None, "value": None},
+    {"physical": 6, "name": "0v", "mode": None, "value": None, "BCM": None},
     {"physical": 7, "name": "GPIO.7", "mode": None, "value": None, "BCM": 4},
     {"physical": 8, "name": "TxD", "mode": "ALT0", "value": None, "BCM": 14},
     {"physical": 9, "name": "0v", "mode": None, "value": None, "BCM": None},
@@ -51,12 +51,14 @@ PORT_MODES = {
     SPI: "SPI",
     I2C: "I2C",
     HARD_PWM: "HARD_PWM",
-    UNKNOWN: "UNKNOWN"
+    UNKNOWN: "UNKNOWN",
+    None: None,
 }
 
 PORT_VALUES = {
     HIGH: "HIGH",
-    LOW: "LOW"
+    LOW: "LOW",
+    None: None,
 }
 
 setmode(BOARD)

@@ -5,18 +5,21 @@ class PinSerializer(serializers.Serializer):
     physical = serializers.IntegerField(
         label="Pin Physical Number",
         validators=[MaxValueValidator(40), MinValueValidator(1)],
+        read_only=True,
     )
 
     hr_mode = serializers.CharField(
         max_length=12,
         label="Human Readable Pin Mode",
-        read_only=True
+        read_only=True,
+        allow_null=True, allow_blank=True
     )
 
     hr_value = serializers.CharField(
         max_length=4,
         label="Human Readable Pin Value",
-        read_only=True
+        read_only=True,
+        allow_null=True, allow_blank=True
     )
 
     mode = serializers.IntegerField(
@@ -38,5 +41,6 @@ class PinSerializer(serializers.Serializer):
 
     BCM = serializers.IntegerField(
         label="Pin BCM Number",
-        read_only=True
+        read_only=True,
+        allow_null=True
     )
