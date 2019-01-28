@@ -1,0 +1,8 @@
+build/*
+.idea/*
+*.egg-info/*
+dist/
+.DS_Store
+*.pyc
+*.sqlite3
+*.db
