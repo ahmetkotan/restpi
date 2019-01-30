@@ -15,6 +15,7 @@ app.controller('pinTableController', function($scope, $http) {
         return new_pinlist;
     };
 
+    var token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
     $http.get("/pins/api/")
         .then(function(response) {
             $scope.pinlist = response.data.results;
@@ -23,7 +24,9 @@ app.controller('pinTableController', function($scope, $http) {
 
     $scope.change_mode = function (physical, mode_code) {
         var url = "/pins/api/" + physical;
-        $http.post(url, {mode: mode_code}, {headers: {'Content-Type': 'application/json'}})
+        $http.post(url,
+            {mode: mode_code},
+            {headers: {'Content-Type': 'application/json', 'X-CSRFToken': token}})
             .then(function (response) {
                 if(response.status == 200 && response.data.operation){
                     console.log(response.data.pin);
@@ -39,7 +42,9 @@ app.controller('pinTableController', function($scope, $http) {
     $scope.change_value = function (physical) {
         var url = "/pins/api/" + physical;
         var new_value = ($scope.pinlist[physical-1].value) ? 0 : 1
-        $http.post(url, {value: new_value}, {headers: {'Content-Type': 'application/json'}})
+        $http.post(url,
+            {value: new_value},
+            {headers: {'Content-Type': 'application/json', 'X-CSRFToken': token}})
             .then(function (response) {
                 if(response.status == 200 && response.data.operation){
                     $scope.pinlist[physical-1] = response.data.pin;
