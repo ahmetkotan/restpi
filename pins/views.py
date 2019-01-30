@@ -46,6 +46,7 @@ class PinView(PaginationAPIView):
         if not pin:
             return Response({"physical": "No pin number."})
 
+
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 

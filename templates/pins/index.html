@@ -49,6 +49,7 @@
                                        ng-checked="pin[0].value"
                                        ng-disabled="pin[0].mode != 0"
                                        ng-show="pin[0].value != null"
+                                       ng-click="change_value(pin[0].physical)"
                                 >
                             </td>
                             <th scope="row" class="text-right">{{ pin[0].physical }}</th>
@@ -59,6 +60,7 @@
                                        ng-checked="pin[1].value"
                                        ng-disabled="pin[1].mode != 0"
                                        ng-show="pin[1].value != null"
+                                       ng-click="change_value(pin[1].physical)"
                                 >
                             </td>
                             <td>

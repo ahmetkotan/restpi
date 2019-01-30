@@ -26,6 +26,22 @@ app.controller('pinTableController', function($scope, $http) {
         $http.post(url, {mode: mode_code}, {headers: {'Content-Type': 'application/json'}})
             .then(function (response) {
                 if(response.status == 200 && response.data.operation){
+                    console.log(response.data.pin);
+                    $scope.pinlist[physical-1] = response.data.pin;
+                    $scope.pins = $scope.refresh_list($scope.pinlist);
+                }
+            })
+            .catch((err) => {
+                $scope.pins = $scope.refresh_list($scope.pinlist);
+            })
+    };
+
+    $scope.change_value = function (physical) {
+        var url = "/pins/api/" + physical;
+        var new_value = ($scope.pinlist[physical-1].value) ? 0 : 1
+        $http.post(url, {value: new_value}, {headers: {'Content-Type': 'application/json'}})
+            .then(function (response) {
+                if(response.status == 200 && response.data.operation){
                     $scope.pinlist[physical-1] = response.data.pin;
                     $scope.pins = $scope.refresh_list($scope.pinlist);
                 }

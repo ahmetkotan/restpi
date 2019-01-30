@@ -11,6 +11,9 @@ def pin_physical_control(physical):
     if physical > 40 and physical < 1:
         raise ValidationError({"physical": "Wrong pin number."})
 
+    if physical not in settings.BOARD_PORTS:
+        raise ValidationError({"physical": "This pin isn't a board pin."})
+
 def get_pin(physical):
     pins = settings.PINS
 
@@ -60,7 +63,11 @@ def write_pin_mode(physical, mode):
         raise ValidationError({"mode": "Wrong mode."})
 
     gpio.setup(physical, new_mode)
-    return read_pin(physical)
+    pin = read_pin(physical)
+    if mode == gpio.IN:
+        pin["value"] = 0
+        pin["hr_value"] = settings.PORT_VALUES[0]
+    return pin
 
 
 def write_pin_value(physical, value):
