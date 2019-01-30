@@ -6,3 +6,5 @@ dist/
 *.pyc
 *.sqlite3
 *.db
+static_root/
+test.html

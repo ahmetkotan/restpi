@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{% block title %}Login{% endblock %}
+{% block title %}Pins{% endblock %}
 
 {% block mainarea %}
     <main class="main-bar">
@@ -27,12 +27,56 @@
                         <tr ng-repeat="pin in pins">
                             <td>{{ pin[0].BCM }}</td>
                             <td>{{ pin[0].name }}</td>
-                            <td>{{ pin[0].hr_mode }}</td>
-                            <td><input type="checkbox" class="switch_1" ng-checked="pin[0].value"></td>
+                            <td>
+                                <div class="input-group">
+                                    <div class="radioBtn btn-group" ng-show="pin[0].is_gpio">
+                                        <a class="btn btn-primary {{ pin[0].mode == 1 ? 'active' : 'notActive' }}"
+                                           data-toggle="happy"
+                                           data-title="I"
+                                           ng-click="change_mode(pin[0].physical, 1)"
+                                        >IN</a>
+
+                                        <a class="btn btn-primary {{ pin[0].mode == 0 ? 'active' : 'notActive' }}"
+                                           data-toggle="happy"
+                                           data-title="O"
+                                           ng-click="change_mode(pin[0].physical, 0)"
+                                        >OUT</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="checkbox" class="switch_1"
+                                       ng-checked="pin[0].value"
+                                       ng-disabled="pin[0].mode != 0"
+                                       ng-show="pin[0].value != null"
+                                >
+                            </td>
                             <th scope="row" class="text-right">{{ pin[0].physical }}</th>
+
                             <th scope="row">{{ pin[1].physical }}</th>
-                            <td><input type="checkbox" class="switch_1" ng-checked="pin[1].value"></td>
-                            <td>{{ pin[1].hr_mode }}</td>
+                            <td>
+                                <input type="checkbox" class="switch_1"
+                                       ng-checked="pin[1].value"
+                                       ng-disabled="pin[1].mode != 0"
+                                       ng-show="pin[1].value != null"
+                                >
+                            </td>
+                            <td>
+                                <div class="radioBtn btn-group" ng-show="pin[1].is_gpio">
+                                        <a class="btn btn-primary {{ pin[1].mode == 1 ? 'active' : 'notActive' }}"
+                                           data-toggle="happy"
+                                           data-title="I"
+                                           ng-click="change_mode(pin[1].physical, 1)"
+                                        >IN</a>
+
+                                        <a class="btn btn-primary {{ pin[1].mode == 0 ? 'active' : 'notActive' }}"
+                                           data-toggle="happy"
+                                           data-title="O"
+                                           ng-click="change_mode(pin[1].physical, 0)"
+                                        >OUT</a>
+                                    </div>
+                                </div>
+                            </td>
                             <td>{{ pin[1].name }}</td>
                             <td>{{ pin[1].BCM }}</td>
                         </tr>
@@ -43,5 +87,9 @@
             </div>
         </div>
     </main>
+
+
+{% endblock %}
+{% block extraFoot %}
     <script src="{% static 'js/pintable.js' %}"></script>
 {% endblock %}

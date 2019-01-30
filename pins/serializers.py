@@ -44,3 +44,8 @@ class PinSerializer(serializers.Serializer):
         read_only=True,
         allow_null=True
     )
+
+    is_gpio = serializers.BooleanField(
+        read_only=True,
+        label="Is pin gpio?"
+    )

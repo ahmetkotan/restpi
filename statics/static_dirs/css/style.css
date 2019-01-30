@@ -49,7 +49,22 @@ table{
 th[scope="row"]:nth-child(2n){
     border-left: 0.75rem solid black;
 }
+.table-left{
+    text-align: right;
+}
 
 input[type="checkbox"].switch_1 {
     font-size: 0.75rem;
+    -webkit-border-radius: 0.1rem;
+    -moz-border-radius: 0.1rem;
+    border-radius: 0.1rem;
+}
+
+.radioBtn .notActive{
+    color: #3276b1;
+    background-color: #fff;
+}
+.radioBtn a.btn{
+    font-size: 0.5rem;
+    border: 0px;
 }

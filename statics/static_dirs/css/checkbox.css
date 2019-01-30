@@ -51,7 +51,7 @@ input[type="checkbox"].switch_1{
   }
 
   input[type="checkbox"].switch_1:checked{
-	background: #0ebeff;
+	background: #0062cc;
   }
 
   input[type="checkbox"].switch_1:after{
@@ -345,3 +345,4 @@ svg.checkbox .is_unchecked{
 }
 /* REF: https://bootsnipp.com/snippets/xrnNM */
 /* Switch 4 Specific Style End */
+
