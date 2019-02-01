@@ -1,6 +1,6 @@
 var app = angular.module('pinTableApp', []);
 app.controller('pinTableController', function($scope, $http) {
-    $scope.refresh_list = function(pin_list){
+    $scope.refresh_list = function(){
         var new_pinlist = [];
         var temp_pinlist = [];
         $scope.pinlist.forEach(function (item, index) {
@@ -19,7 +19,7 @@ app.controller('pinTableController', function($scope, $http) {
     $http.get("/pins/api/")
         .then(function(response) {
             $scope.pinlist = response.data.results;
-            $scope.pins = $scope.refresh_list($scope.pinlist);
+            $scope.pins = $scope.refresh_list();
         });
 
     $scope.change_mode = function (physical, mode_code) {
@@ -28,14 +28,27 @@ app.controller('pinTableController', function($scope, $http) {
             {mode: mode_code},
             {headers: {'Content-Type': 'application/json', 'X-CSRFToken': token}})
             .then(function (response) {
-                if(response.status == 200 && response.data.operation){
-                    console.log(response.data.pin);
+                if(response.data.operation){
                     $scope.pinlist[physical-1] = response.data.pin;
-                    $scope.pins = $scope.refresh_list($scope.pinlist);
+                    $scope.pins = $scope.refresh_list();
                 }
             })
             .catch((err) => {
-                $scope.pins = $scope.refresh_list($scope.pinlist);
+                var error_msg, footer_msg = '';
+                console.log(err);
+                if(err.status == 403){
+                    error_msg = err.data.detail;
+                    footer_msg = '<a href="/login">Login</a>';
+                }else{
+                    error_msg = err.data.mode
+                }
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: error_msg,
+                    footer: footer_msg
+                });
+                $scope.pins = $scope.refresh_list();
             })
     };
 
@@ -46,24 +59,27 @@ app.controller('pinTableController', function($scope, $http) {
             {value: new_value},
             {headers: {'Content-Type': 'application/json', 'X-CSRFToken': token}})
             .then(function (response) {
-                if(response.status == 200 && response.data.operation){
+                if(response.data.operation){
                     $scope.pinlist[physical-1] = response.data.pin;
-                    $scope.pins = $scope.refresh_list($scope.pinlist);
+                    $scope.pins = $scope.refresh_list();
                 }
             })
             .catch((err) => {
-                $scope.pins = $scope.refresh_list($scope.pinlist);
+                var error_msg, footer_msg = '';
+                if(err.status == 403){
+                    error_msg = err.data.detail;
+                    footer_msg = '<a href="/login">Login</a>';
+                }else{
+                    error_msg = err.data.value
+                }
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: error_msg,
+                    footer: footer_msg
+                });
+                $scope.pins = $scope.refresh_list();
             })
     }
 
-});
-
-$(document).ready(function() {
-    $('.container').on('click', '.radioBtn a', function() {
-        var sel = $(this).data('title');
-        var tog = $(this).data('toggle');
-        $(this).parent().next('.' + tog).prop('value', sel);
-        $(this).parent().find('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
-        $(this).parent().find('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
-    });
 });

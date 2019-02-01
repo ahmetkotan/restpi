@@ -10,7 +10,6 @@
       <link rel="stylesheet" href="{% static 'css/checkbox.css' %}">
       <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-      <script src="{% static 'js/angular.min.js' %}"></script>
 
       <title>Restpi | {% block title %}{% endblock %}</title>
       {% block extraHead %}{% endblock %}
@@ -20,7 +19,7 @@
 
     {% block mainarea %}{% endblock %}
 
-
+    <script src="{% static 'js/angular.min.js' %}"></script>
     <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>

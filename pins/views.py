@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import TemplateView
 
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -10,11 +10,9 @@ from picontrol.control import read_pin, read_all_pin, write_pin_value, write_pin
 from pins.pagination import PaginationAPIView
 from pins.serializers import PinSerializer
 
-class PinIndexView(ListView):
+class PinIndexView(TemplateView):
     template_name = 'pins/index.html'
 
-    def get_queryset(self):
-        return read_all_pin()
 
 class PinView(PaginationAPIView):
     serializer_class = PinSerializer
