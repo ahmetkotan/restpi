@@ -1,0 +1,129 @@
+{
+	"variables": [],
+	"info": {
+		"name": "RestPi",
+		"_postman_id": "69afd048-0128-b0a9-3c82-54fe9ae7bc74",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "RestPi Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"try {",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"}catch(e){",
+							"    console.log(\"Error.\");",
+							"}",
+							"postman.setEnvironmentVariable(\"token\", responseJSON.token);",
+							"tests[\"Login successful\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://192.168.1.29:8001/tokens/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"{{username}}\",\n\t\"password\":\"{{password}}\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Change Pin Mode and Value",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"try {",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"}catch(e){",
+							"    console.log(\"Error.\");",
+							"}",
+							"",
+							"tests[\"Post pin is ok\"] = responseCode.code === 200;",
+							"tests[\"Mode and value changed\"] = responseJSON.operation === true;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://192.168.1.29:8001/pins/api/11",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"mode\": 0,\n\t\"value\": 1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"try {",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"}catch(e){",
+							"    console.log(\"Error.\");",
+							"}",
+							"",
+							"tests[\"Get pin is ok\"] = responseCode.code === 200;",
+							"tests[\"Pin values is ok\"] = responseJSON.mode === 0 && responseJSON.value === 1;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://192.168.1.29:8001/pins/api/11",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
