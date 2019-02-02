@@ -1,0 +1,6 @@
+Django==1.11.18
+djangorestframework==3.9.1
+pytz==2018.9
+tokenauth==0.9.1
+django-cors-headers==2.4.0
+RPi.GPIO==0.6.5

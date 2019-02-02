@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.views.static import serve
 
 from restpi.views import Index, Login, Logout
 
@@ -27,3 +29,8 @@ urlpatterns = [
     url(r'^pins/', include('pins.urls')),
     url(r'', include('tokenauth.urls')),
 ]
+
+if not settings.DEBUG:
+    urlpatterns += [
+        url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
+    ]
