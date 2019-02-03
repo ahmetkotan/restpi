@@ -28,7 +28,7 @@
 				}
 			],
 			"request": {
-				"url": "http://192.168.1.29:8001/tokens/",
+				"url": "{{raspi_url}}/tokens/",
 				"method": "POST",
 				"header": [
 					{
@@ -67,7 +67,7 @@
 				}
 			],
 			"request": {
-				"url": "http://192.168.1.29:8001/pins/api/11",
+				"url": "{{raspi_url}}/pins/api/11",
 				"method": "POST",
 				"header": [
 					{
@@ -111,7 +111,7 @@
 				}
 			],
 			"request": {
-				"url": "http://192.168.1.29:8001/pins/api/11",
+				"url": "{{raspi_url}}/pins/api/11",
 				"method": "GET",
 				"header": [
 					{
