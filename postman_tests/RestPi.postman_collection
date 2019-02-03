@@ -90,7 +90,93 @@
 			"response": []
 		},
 		{
-			"name": "Get Pin",
+			"name": "Change Pin Mode",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"try {",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"}catch(e){",
+							"    console.log(\"Error.\");",
+							"}",
+							"",
+							"tests[\"Mode changed\"] = responseJSON.operation === true;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{raspi_url}}/pins/api/11",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"mode\": 0\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Change Pin Value",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"try {",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"}catch(e){",
+							"    console.log(\"Error.\");",
+							"}",
+							"",
+							"tests[\"Value changed\"] = responseJSON.operation === true;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{raspi_url}}/pins/api/11",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"value\": 1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pin Status",
 			"event": [
 				{
 					"listen": "test",
@@ -112,6 +198,41 @@
 			],
 			"request": {
 				"url": "{{raspi_url}}/pins/api/11",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Pin Statuses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"try {",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"}catch(e){",
+							"    console.log(\"Error.\");",
+							"}",
+							"",
+							"tests[\"Get all pin is ok\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{raspi_url}}/pins/api/",
 				"method": "GET",
 				"header": [
 					{
